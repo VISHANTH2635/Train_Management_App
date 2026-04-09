@@ -1,13 +1,12 @@
 import java.util.*;
-import java.util.regex.*;
 
-class Bogie {
-    String name;
-    int capacity;
+class GoodsBogie {
+    String type;
+    String cargo;
 
-    Bogie(String name, int capacity) {
-        this.name = name;
-        this.capacity = capacity;
+    GoodsBogie(String type, String cargo) {
+        this.type = type;
+        this.cargo = cargo;
     }
 }
 
@@ -16,25 +15,29 @@ public class TrainManagement {
     public static void main(String[] args) {
 
         System.out.println("===========================================");
-        System.out.println(" UC11 - Validate Train ID and Cargo Code");
+        System.out.println(" UC12 - Safety Compliance Check");
         System.out.println("===========================================\n");
 
-        Scanner scanner = new Scanner (System.in);
-        System.out.print("Enter Train ID (Format: TRN-1234): ");
-        CharSequence trainId = scanner.nextLine();
-        System.out.print("Enter Cargo Code (Format: PET-AB): ");
-        CharSequence cargoID = scanner.nextLine();
+        List<GoodsBogie> bogies = new ArrayList<>();
 
-        Pattern trainPattern = Pattern.compile("TRN-\\d{4}");
-        Pattern cargoPattern = Pattern.compile("PET-[A-Z]{2}");
+        bogies.add(new GoodsBogie("Cylindrical", "Petroleum"));
+        bogies.add(new GoodsBogie("Open", "Coal"));
+        bogies.add(new GoodsBogie("Box", "Grain"));
+        bogies.add(new GoodsBogie("Cylindrical", "Petroleum"));
 
-        boolean isTrainValid = trainPattern.matcher(trainId).matches();
-        boolean isCargoValid = cargoPattern.matcher(cargoID).matches();
+        System.out.println("Goods Bogies:");
+        for (GoodsBogie b : bogies) {
+            System.out.println(b.type + " -> " + b.cargo);
+        }
 
-        System.out.println("Validation Results:");
-        System.out.println("Train ID Valid: "+isTrainValid);
-        System.out.println("Cargo Code Valid: "+isCargoValid);
+        boolean isSafe = bogies.stream()
+                .allMatch(b ->
+                        !b.type.equals("Cylindrical") ||
+                                b.cargo.equals("Petroleum")
+                );
 
-        System.out.println("UC11 validation completed...");
+        System.out.println("\nSafety Compliance Status: " + isSafe);
+
+        System.out.println("\nUC12 safety check completed...");
     }
 }
