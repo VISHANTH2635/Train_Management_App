@@ -5,26 +5,29 @@ public class TrainManagement {
     public static void main(String[] args) {
 
         System.out.println("===========================================");
-        System.out.println(" UC17 - Sort Bogie Names using Arrays.sort()");
+        System.out.println(" UC18 - Linear Search for Bogie ID");
         System.out.println("===========================================\n");
 
-        String[] bogies = {"Sleeper","AC Chair","First Class","General","Luxury"};
+        String[] bogieIds = {"BG101","BG205","BG309","BG412","BG550"};
+        String searchKey = "BG309";
 
-        System.out.println("Original Bogie Names:");
-        System.out.println(Arrays.toString(bogies));
+        System.out.println("Bogie IDs:");
+        System.out.println(Arrays.toString(bogieIds));
 
-        sortBogieNames(bogies);
+        boolean found = linearSearch(bogieIds, searchKey);
 
-        System.out.println("\nSorted Bogie Names (Alphabetical):");
-        System.out.println(Arrays.toString(bogies));
+        System.out.println("\nSearching for: " + searchKey);
+        System.out.println("Bogie Found: " + found);
 
-        System.out.println("\nUC17 sorting completed...");
+        System.out.println("\nUC18 search completed...");
     }
 
-    // Method used by test cases
-    public static String[] sortBogieNames(String[] arr) {
-        String[] copy = arr.clone(); // avoid modifying original
-        Arrays.sort(copy);
-        return copy;
+    public static boolean linearSearch(String[] arr, String key) {
+        for (String id : arr) {
+            if (id.equals(key)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
