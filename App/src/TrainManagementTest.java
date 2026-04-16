@@ -1,40 +1,27 @@
 import org.junit.Test;
+import java.util.*;
 import static org.junit.Assert.*;
 
 public class TrainManagementTest {
 
-    @Test
-    public void testSearch_BogieFound() {
-        String[] arr = {"BG101","BG205","BG309","BG412","BG550"};
+    @Test(expected = IllegalStateException.class)
+    public void testSearch_EmptyTrainThrowsException() {
+        List<String> bogies = new ArrayList<>();
 
-        assertTrue(TrainManagement.binarySearch(arr, "BG309"));
+        TrainManagement.searchBogie(bogies, "BG101");
+    }
+
+    @Test
+    public void testSearch_NonEmptyTrainWorks() {
+        List<String> bogies = Arrays.asList("BG101","BG205","BG309");
+
+        assertTrue(TrainManagement.searchBogie(bogies, "BG205"));
     }
 
     @Test
     public void testSearch_BogieNotFound() {
-        String[] arr = {"BG101","BG205","BG309","BG412","BG550"};
+        List<String> bogies = Arrays.asList("BG101","BG205","BG309");
 
-        assertFalse(TrainManagement.binarySearch(arr, "BG999"));
-    }
-
-    @Test
-    public void testSearch_FirstElementMatch() {
-        String[] arr = {"BG101","BG205","BG309"};
-
-        assertTrue(TrainManagement.binarySearch(arr, "BG101"));
-    }
-
-    @Test
-    public void testSearch_LastElementMatch() {
-        String[] arr = {"BG101","BG205","BG309","BG412","BG550"};
-
-        assertTrue(TrainManagement.binarySearch(arr, "BG550"));
-    }
-
-    @Test
-    public void testSearch_SingleElementArray() {
-        String[] arr = {"BG101"};
-
-        assertTrue(TrainManagement.binarySearch(arr, "BG101"));
+        assertFalse(TrainManagement.searchBogie(bogies, "BG999"));
     }
 }

@@ -5,39 +5,34 @@ public class TrainManagement {
     public static void main(String[] args) {
 
         System.out.println("===========================================");
-        System.out.println(" UC19 - Binary Search for Bogie ID");
+        System.out.println(" UC20 - Prevent Search on Empty Train");
         System.out.println("===========================================\n");
 
-        String[] bogieIds = {"BG101","BG205","BG309","BG412","BG550"}; // sorted
-        String searchKey = "BG309";
+        List<String> bogieIds = new ArrayList<>(); // empty list
+        String searchKey = "BG101";
 
-        System.out.println("Sorted Bogie IDs:");
-        System.out.println(Arrays.toString(bogieIds));
+        try {
+            boolean found = searchBogie(bogieIds, searchKey);
 
-        boolean found = binarySearch(bogieIds, searchKey);
+            System.out.println("Searching for: " + searchKey);
+            System.out.println("Bogie Found: " + found);
 
-        System.out.println("\nSearching for: " + searchKey);
-        System.out.println("Bogie Found: " + found);
+        } catch (IllegalStateException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
 
-        System.out.println("\nUC19 search completed...");
+        System.out.println("\nUC20 validation completed...");
     }
 
-    // Method for test cases
-    public static boolean binarySearch(String[] arr, String key) {
-        int low = 0;
-        int high = arr.length - 1;
+    public static boolean searchBogie(List<String> bogies, String key) {
 
-        while (low <= high) {
-            int mid = (low + high) / 2;
+        if (bogies.isEmpty()) {
+            throw new IllegalStateException("No bogies available in train for search");
+        }
 
-            int cmp = key.compareTo(arr[mid]);
-
-            if (cmp == 0) {
+        for (String id : bogies) {
+            if (id.equals(key)) {
                 return true;
-            } else if (cmp > 0) {
-                low = mid + 1;
-            } else {
-                high = mid - 1;
             }
         }
         return false;
