@@ -16,35 +16,41 @@ public class TrainManagement {
     public static void main(String[] args) {
 
         System.out.println("===========================================");
-        System.out.println(" UC9 - Group Bogies by Type");
+        System.out.println(" UC13 - Performance Comparison");
         System.out.println("===========================================\n");
 
         List<Bogie> bogies = new ArrayList<>();
 
-        bogies.add(new Bogie("Sleeper", 72));
-        bogies.add(new Bogie("AC Chair", 56));
-        bogies.add(new Bogie("First Class", 24));
-        bogies.add(new Bogie("Sleeper", 70));
-        bogies.add(new Bogie("AC Chair", 60));
+        for (int i = 0; i < 100000; i++) {
+            bogies.add(new Bogie("Sleeper", i % 100));
+        }
 
-        System.out.println("All Bogies:");
+        long startLoop = System.nanoTime();
+
+        List<Bogie> loopResult = new ArrayList<>();
         for (Bogie b : bogies) {
-            System.out.println(b.name + " -> " + b.capacity);
-        }
-
-        Map<String, List<Bogie>> grouped = bogies.stream()
-                .collect(Collectors.groupingBy(b -> b.name));
-
-        System.out.println("\nGrouped Bogies:\n");
-
-        for (String key : grouped.keySet()) {
-            System.out.println("Bogie Type: " + key);
-            for (Bogie b : grouped.get(key)) {
-                System.out.println("  Capacity -> " + b.capacity);
+            if (b.capacity > 60) {
+                loopResult.add(b);
             }
-            System.out.println();
         }
 
-        System.out.println("UC9 grouping completed...");
+        long endLoop = System.nanoTime();
+        long loopTime = endLoop - startLoop;
+
+        long startStream = System.nanoTime();
+
+        List<Bogie> streamResult = bogies.stream()
+                .filter(b -> b.capacity > 60)
+                .collect(Collectors.toList());
+
+        long endStream = System.nanoTime();
+        long streamTime = endStream - startStream;
+
+        System.out.println("Loop Filtering Time (ns): " + loopTime);
+        System.out.println("Stream Filtering Time (ns): " + streamTime);
+
+        System.out.println("\nResults Match: " + (loopResult.size() == streamResult.size()));
+
+        System.out.println("\nUC13 performance comparison completed...");
     }
 }
