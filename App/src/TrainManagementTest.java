@@ -4,49 +4,39 @@ import static org.junit.Assert.*;
 public class TrainManagementTest {
 
     @Test
-    public void testCargo_SafeAssignment() {
-        GoodsBogie b = new GoodsBogie("Cylindrical");
-        b.assignCargo("Petroleum");
+    public void testSort_BasicSorting() {
+        int[] input = {72, 56, 24, 70, 60};
+        int[] expected = {24, 56, 60, 70, 72};
 
-        assertEquals("Petroleum", b.cargo);
+        assertArrayEquals(expected, TrainManagement.bubbleSort(input));
     }
 
     @Test
-    public void testCargo_UnsafeAssignmentHandled() {
-        GoodsBogie b = new GoodsBogie("Rectangular");
+    public void testSort_AlreadySortedArray() {
+        int[] input = {24, 56, 60, 70, 72};
 
-        try {
-            b.assignCargo("Petroleum");
-            assertNull(b.cargo); // cargo should not be assigned
-        } catch (Exception e) {
-            fail("Exception should be handled inside method");
-        }
+        assertArrayEquals(input, TrainManagement.bubbleSort(input));
     }
 
     @Test
-    public void testCargo_CargoNotAssignedAfterFailure() {
-        GoodsBogie b = new GoodsBogie("Rectangular");
-        b.assignCargo("Petroleum");
+    public void testSort_DuplicateValues() {
+        int[] input = {72, 56, 56, 24};
+        int[] expected = {24, 56, 56, 72};
 
-        assertNull(b.cargo);
+        assertArrayEquals(expected, TrainManagement.bubbleSort(input));
     }
 
     @Test
-    public void testCargo_ProgramContinuesAfterException() {
-        GoodsBogie b1 = new GoodsBogie("Rectangular");
-        GoodsBogie b2 = new GoodsBogie("Cylindrical");
+    public void testSort_SingleElementArray() {
+        int[] input = {50};
 
-        b1.assignCargo("Petroleum"); // unsafe
-        b2.assignCargo("Petroleum"); // safe
-
-        assertEquals("Petroleum", b2.cargo);
+        assertArrayEquals(input, TrainManagement.bubbleSort(input));
     }
 
     @Test
-    public void testCargo_FinallyBlockExecution() {
-        GoodsBogie b = new GoodsBogie("Cylindrical");
-        b.assignCargo("Petroleum");
+    public void testSort_AllEqualValues() {
+        int[] input = {40, 40, 40};
 
-        assertNotNull(b.cargo);
+        assertArrayEquals(input, TrainManagement.bubbleSort(input));
     }
 }
