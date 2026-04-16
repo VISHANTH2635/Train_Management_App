@@ -5,42 +5,26 @@ public class TrainManagement {
     public static void main(String[] args) {
 
         System.out.println("===========================================");
-        System.out.println(" UC16 - Manual Sorting using Bubble Sort");
+        System.out.println(" UC17 - Sort Bogie Names using Arrays.sort()");
         System.out.println("===========================================\n");
 
-        int[] capacities = {72, 56, 24, 70, 60};
+        String[] bogies = {"Sleeper","AC Chair","First Class","General","Luxury"};
 
-        System.out.println("Original Capacities:");
-        printArray(capacities);
+        System.out.println("Original Bogie Names:");
+        System.out.println(Arrays.toString(bogies));
 
-        int[] sorted = bubbleSort(capacities);
+        sortBogieNames(bogies);
 
-        System.out.println("\nSorted Capacities (Ascending):");
-        printArray(sorted);
+        System.out.println("\nSorted Bogie Names (Alphabetical):");
+        System.out.println(Arrays.toString(bogies));
 
-        System.out.println("\nUC16 sorting completed...");
+        System.out.println("\nUC17 sorting completed...");
     }
 
-    public static int[] bubbleSort(int[] arr) {
-        int[] copy = arr.clone(); // do not modify original
-
-        for (int i = 0; i < copy.length - 1; i++) {
-            for (int j = 0; j < copy.length - 1 - i; j++) {
-                if (copy[j] > copy[j + 1]) {
-                    int temp = copy[j];
-                    copy[j] = copy[j + 1];
-                    copy[j + 1] = temp;
-                }
-            }
-        }
+    // Method used by test cases
+    public static String[] sortBogieNames(String[] arr) {
+        String[] copy = arr.clone(); // avoid modifying original
+        Arrays.sort(copy);
         return copy;
-    }
-
-    private static void printArray(int[] arr) {
-        for (int i = 0; i < arr.length; i++) {
-            System.out.print(arr[i]);
-            if (i < arr.length - 1) System.out.print(" ");
-        }
-        System.out.println();
     }
 }

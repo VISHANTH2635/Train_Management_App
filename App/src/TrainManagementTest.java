@@ -4,39 +4,40 @@ import static org.junit.Assert.*;
 public class TrainManagementTest {
 
     @Test
-    public void testSort_BasicSorting() {
-        int[] input = {72, 56, 24, 70, 60};
-        int[] expected = {24, 56, 60, 70, 72};
+    public void testSort_BasicAlphabeticalSorting() {
+        String[] input = {"Sleeper","AC Chair","First Class","General","Luxury"};
+        String[] expected = {"AC Chair","First Class","General","Luxury","Sleeper"};
 
-        assertArrayEquals(expected, TrainManagement.bubbleSort(input));
+        assertArrayEquals(expected, TrainManagement.sortBogieNames(input));
+    }
+
+    @Test
+    public void testSort_UnsortedInput() {
+        String[] input = {"Luxury","General","Sleeper","AC Chair"};
+        String[] expected = {"AC Chair","General","Luxury","Sleeper"};
+
+        assertArrayEquals(expected, TrainManagement.sortBogieNames(input));
     }
 
     @Test
     public void testSort_AlreadySortedArray() {
-        int[] input = {24, 56, 60, 70, 72};
+        String[] input = {"AC Chair","First Class","General"};
 
-        assertArrayEquals(input, TrainManagement.bubbleSort(input));
+        assertArrayEquals(input, TrainManagement.sortBogieNames(input));
     }
 
     @Test
-    public void testSort_DuplicateValues() {
-        int[] input = {72, 56, 56, 24};
-        int[] expected = {24, 56, 56, 72};
+    public void testSort_DuplicateBogieNames() {
+        String[] input = {"Sleeper","AC Chair","Sleeper","General"};
+        String[] expected = {"AC Chair","General","Sleeper","Sleeper"};
 
-        assertArrayEquals(expected, TrainManagement.bubbleSort(input));
+        assertArrayEquals(expected, TrainManagement.sortBogieNames(input));
     }
 
     @Test
     public void testSort_SingleElementArray() {
-        int[] input = {50};
+        String[] input = {"Sleeper"};
 
-        assertArrayEquals(input, TrainManagement.bubbleSort(input));
-    }
-
-    @Test
-    public void testSort_AllEqualValues() {
-        int[] input = {40, 40, 40};
-
-        assertArrayEquals(input, TrainManagement.bubbleSort(input));
+        assertArrayEquals(input, TrainManagement.sortBogieNames(input));
     }
 }
